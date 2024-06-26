@@ -1,11 +1,15 @@
 package Screens
 
 import DrawerItem
-import Navigation.NavRoutes
+import Navigation.MainNavRoutes
+import Screens.Dashboard.DashboardScreen
+import Screens.Orders.OrderDetailsScreen
+import Screens.Orders.OrderListScreen
+import Screens.Products.AddCategoryListScreen
+import Screens.Products.CategoryListScreen
 import UI.secondary_color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,7 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -46,7 +49,8 @@ fun MainScreen(modifier: Modifier = Modifier) {
         topBar = {
             TopAppBar(
                 title = { Text("Quick Service") },
-                backgroundColor = Color.White
+                backgroundColor = Color.White,
+                elevation = 0.dp
 
             )
         }
@@ -72,14 +76,19 @@ fun MainScreen(modifier: Modifier = Modifier) {
                             clickedValue = value
 
                             if(it.title =="Dashboard"){
-                                navHostController.navigate(NavRoutes.MainScreen.Dashboard.routes)
+                                navHostController.navigate(MainNavRoutes.Dashboard.DashboardScreen.routes)
                             }
                             if(it.title =="Orders"){
-                                navHostController.navigate(NavRoutes.MainScreen.Orders.routes)
+                                navHostController.navigate(MainNavRoutes.Orders.OrderListScreen.routes)
+                            }
+
+                            if(it.title =="Products"){
+                                navHostController.navigate(MainNavRoutes.Products.CategoryList.routes)
                             }
                         },
                         title = it.title,
-                        clickedItem = clickedValue
+                        clickedItem = clickedValue,
+                        icon = it.icon
                     )
 
                 }
@@ -90,24 +99,44 @@ fun MainScreen(modifier: Modifier = Modifier) {
             NavHost(
                 modifier = Modifier.padding(20.dp).fillMaxSize().clip(RoundedCornerShape(8.dp)),
                 navController = navHostController,
-                startDestination = NavRoutes.MainScreen.Dashboard.routes
+                startDestination = MainNavRoutes.Dashboard.routes
 
             ) {
 
-                composable(route = NavRoutes.MainScreen.Dashboard.routes) {
-                   DashboardScreen()
+                navigation(
+                    route = MainNavRoutes.Dashboard.routes,
+                    startDestination = MainNavRoutes.Dashboard.DashboardScreen.routes,
+
+                ){
+                    composable(route = MainNavRoutes.Dashboard.DashboardScreen.routes) {
+                        DashboardScreen()
+                    }
+
+
                 }
 
+
                 navigation(
-                    route = NavRoutes.MainScreen.Orders.routes,
-                    startDestination = NavRoutes.MainScreen.Orders.OrderListScreen.routes
+                    route = MainNavRoutes.Orders.routes,
+                    startDestination = MainNavRoutes.Orders.OrderListScreen.routes
                 ) {
 
-                    composable(route = NavRoutes.MainScreen.Orders.OrderListScreen.routes) {
+                    composable(route = MainNavRoutes.Orders.OrderListScreen.routes) {
                         OrderListScreen(navHostController = navHostController)
                     }
-                    composable(route = NavRoutes.MainScreen.Orders.OrderDetailScreen.routes) {
+                    composable(route = MainNavRoutes.Orders.OrderDetailScreen.routes) {
                         OrderDetailsScreen()
+                    }
+
+                }
+
+                navigation(route = MainNavRoutes.Products.routes, startDestination = MainNavRoutes.Products.CategoryList.routes){
+
+                    composable(route = MainNavRoutes.Products.CategoryList.routes){
+                        CategoryListScreen(navHostController = navHostController)
+                    }
+                    composable(route = MainNavRoutes.Products.AddCategory.routes){
+                        AddCategoryListScreen(navHostController = navHostController)
                     }
 
                 }
