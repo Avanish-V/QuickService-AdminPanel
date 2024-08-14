@@ -10,44 +10,56 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import di.appModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinApplication
+import org.koin.core.KoinApplication
 
 @Composable
 @Preview
 fun App() {
-    val navHostController = rememberNavController()
 
-    MaterialTheme {
+    KoinApplication(
 
-        Surface {
+        application = {
+            modules(appModule)
+        }
 
-            NavHost(navController = navHostController, startDestination = NavRoutes.Authentication.routes){
+    ) {
 
-                navigation(route = NavRoutes.Authentication.routes, startDestination = NavRoutes.Authentication.LoginScreen.routes){
+        val navHostController = rememberNavController()
 
-                    composable(route = NavRoutes.Authentication.LoginScreen.routes){
+        MaterialTheme {
 
-                        LoginScreen(navHostController = navHostController)
+            Surface {
+
+                NavHost(navController = navHostController, startDestination = NavRoutes.Authentication.routes){
+
+                    navigation(route = NavRoutes.Authentication.routes, startDestination = NavRoutes.Authentication.LoginScreen.routes){
+
+                        composable(route = NavRoutes.Authentication.LoginScreen.routes){
+
+                            LoginScreen(navHostController = navHostController)
+                        }
+
+                        composable(route = NavRoutes.Authentication.SignupScreen.routes){
+
+                            SignupScreen()
+                        }
+
                     }
 
-                    composable(route = NavRoutes.Authentication.SignupScreen.routes){
+                    navigation(route = NavRoutes.MainScreen.routes, startDestination = NavRoutes.MainScreen.MainScreen.routes){
 
-                        SignupScreen()
-                    }
+                        composable(route = NavRoutes.MainScreen.MainScreen.routes){
 
-                }
+                            MainScreen()
 
-                navigation(route = NavRoutes.MainScreen.routes, startDestination = NavRoutes.MainScreen.MainScreen.routes){
+                        }
 
-                    composable(route = NavRoutes.MainScreen.MainScreen.routes){
 
-                        MainScreen()
 
                     }
-
-
-
-                }
 
 
                 }
@@ -58,6 +70,10 @@ fun App() {
         }
 
     }
+}
+
+
+
 
 
 
