@@ -212,7 +212,9 @@ fun PromotionScreen(navHostController: NavHostController) {
                     TypeSelection(workType = {workType = it})
                     CategorySelector(
                         isLoading = {},
-                        onSelected = {selectedCategory = it}
+                        onSelected = {
+                            selectedCategory = it
+                        }
                     )
                 }
             }
@@ -267,9 +269,12 @@ fun CategorySelector(modifier:Modifier = Modifier,isLoading:(Boolean)->Unit,onSe
 
     val categoryViewModel = koinInject<CategoryViewModel>()
 
-    var selectedText by remember { mutableStateOf("Air Conditioner") }
+    var selectedText by remember { mutableStateOf("Select Category") }
+
+
 
     LaunchedEffect(Unit){
+        onSelected(selectedText)
         categoryViewModel.getCategory()
     }
 
@@ -397,7 +402,8 @@ fun PromotionSingleItem(
                 ){
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = Blue
                     )
                 }
 

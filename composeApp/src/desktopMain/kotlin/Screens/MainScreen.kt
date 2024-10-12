@@ -23,8 +23,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,7 +50,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -55,6 +60,7 @@ import androidx.navigation.compose.rememberNavController
 import drawerList
 import me.sample.library.resources.Res
 import me.sample.library.resources.savvy
+import me.sample.library.resources.savvy_black
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
@@ -82,17 +88,18 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 title = {
 
                 },
-                navigationIcon = {
-                    Image(
-                        alignment = Alignment.CenterStart,
-                        painter = org.jetbrains.compose.resources.painterResource(Res.drawable.savvy),
-                        contentDescription = ""
-                    )
-                },
                 backgroundColor = Color.White,
                 elevation = 0.dp,
                 actions = {
 
+                    Row (modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically){
+                        Image(
+                            modifier = Modifier,
+                            alignment = Alignment.CenterStart,
+                            painter = org.jetbrains.compose.resources.painterResource(Res.drawable.savvy_black),
+                            contentDescription = ""
+                        )
+                    }
 
                 }
 
@@ -105,6 +112,8 @@ fun MainScreen(modifier: Modifier = Modifier) {
             var clickedValue by rememberSaveable{
                 mutableStateOf("Dashboard")
             }
+
+
             LazyColumn(
                 modifier = Modifier.width(250.dp).fillMaxHeight().shadow(
                     elevation = 0.5.dp
@@ -112,6 +121,8 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(end = 20.dp)
             ) {
+
+                item {}
 
                 items(drawerList){
 
@@ -150,7 +161,6 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 }
 
             }
-
 
             Column {
 

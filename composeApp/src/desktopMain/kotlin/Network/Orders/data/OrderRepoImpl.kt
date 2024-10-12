@@ -21,7 +21,7 @@ class OrderRepoImpl(private val client: HttpClient) : OrderRepository {
 
         try {
 
-            val response = client.get("/orders/$prof_id")
+            val response = client.get("/orders/getOrdersByProfessionalId/$prof_id")
 
             when(response.status.value){
                 in 200..299->{

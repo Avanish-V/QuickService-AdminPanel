@@ -3,6 +3,8 @@ package Screens.Professionals
 import Network.Orders.presantation.OrdersViewModel
 import Network.Professionals.presantation.ProfessionalsViewModel
 import Screens.Orders.LoadingScreen
+import Screens.Orders.OrdersSingleRow
+import Screens.Orders.SingleComponentForHeader
 import SharedViewModel.SharedProfessionalViewModel
 import UI.Blue
 import UI.secondary_color
@@ -65,6 +67,7 @@ fun ProfessionalDetail(navHostController: NavHostController) {
     LaunchedEffect(Unit){
         professionalData.value?.let { orderViewModel.getOrdersByProfessional(it.professionalId) }
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -80,6 +83,7 @@ fun ProfessionalDetail(navHostController: NavHostController) {
                         onClick = {
 
                         },
+                        enabled = false,
                         modifier = Modifier.padding(10.dp),
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Blue,
@@ -87,7 +91,7 @@ fun ProfessionalDetail(navHostController: NavHostController) {
                         )
                     ) {
 
-                        Text("Verify")
+                        Text("Verified")
 
                     }
                 },
@@ -111,106 +115,153 @@ fun ProfessionalDetail(navHostController: NavHostController) {
 
             item {
 
-                Row(Modifier.fillMaxWidth().padding(top = 12.dp)) {
+                Row(Modifier.fillMaxWidth().background(color = Color.White).padding(20.dp),) {
 
-                    Row (modifier = Modifier.background(color = Color.White, shape = RoundedCornerShape(12.dp))){
+                    Column (modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(20.dp)){
 
-                        Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Row (modifier = Modifier, ){
 
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Name", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.professionalName.toString())
+                            Box(modifier = Modifier.weight(1f)){
+
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Name", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.professionalName.toString())
+                                }
+
                             }
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Professional Id", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.professionalId.toString())
+                            Box(modifier = Modifier.weight(1f)){
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Professional Id", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.professionalId.toString())
+                                }
+
                             }
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Email", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.email.toString())
+                            Box(modifier = Modifier.weight(1f)){
+
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Email", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.email.toString())
+                                }
+
                             }
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Mobile", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.mobile.toString())
+
+
+                        }
+
+                        Row (modifier = Modifier.background(color = Color.White, shape = RoundedCornerShape(12.dp))){
+
+                            Box(modifier = Modifier.weight(1f)){
+
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Mobile", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.mobile.toString())
+                                }
+
                             }
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Adhar", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.adharNumber.toString())
+                            Box(modifier = Modifier.weight(1f)){
+
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Adhar", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.adharNumber.toString())
+                                }
+
                             }
-                            Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
-                                Text(text = "Address", fontWeight = FontWeight.SemiBold)
-                                Text(text = professionalData.value?.address.toString())
+                            Box(modifier = Modifier.weight(1f)){
+
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Address", fontWeight = FontWeight.SemiBold)
+                                    Text(text = professionalData.value?.address.toString())
+                                }
+
                             }
+
 
                         }
 
-                        AsyncImage(
-                            modifier = Modifier.padding(top = 24.dp, end = 24.dp).clip(RoundedCornerShape(12.dp)).height(100.dp).width(80.dp),
-                            model = professionalData.value?.photoUrl,
-                            contentDescription = "",
-                            contentScale = ContentScale.FillBounds
-                        )
-                    }
+                        Row (modifier = Modifier.background(color = Color.White, shape = RoundedCornerShape(12.dp))){
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                            Box(modifier = Modifier.weight(1f)){
 
-                    Column (modifier = Modifier.weight(1f).background(color = Color.White, shape = RoundedCornerShape(12.dp))){
+                                Column (verticalArrangement = Arrangement.spacedBy(6.dp)){
+                                    Text(text = "Status", fontWeight = FontWeight.SemiBold)
+                                    Text(text = "Active")
+                                }
 
-                        Box (contentAlignment = Alignment.Center, modifier = Modifier.padding(20.dp).height(20.dp)){
-                            Text(text = "Orders", fontWeight = FontWeight.Bold)
-                        }
+                            }
 
-                        Divider()
-                        Row(modifier = Modifier.height(42.dp), verticalAlignment = Alignment.CenterVertically) {
 
-                            Box (modifier = Modifier.weight(1f), contentAlignment = Alignment.Center){
-                                Text(text = "Product")
-                            }
-                            Box (modifier = Modifier.weight(1f), contentAlignment = Alignment.Center){
-                                Text(text = "Category")
-                            }
-                            Box (modifier = Modifier.weight(1f), contentAlignment = Alignment.Center){
-                                Text(text = "Product Id")
-                            }
-                            Box (modifier = Modifier.weight(1f), contentAlignment = Alignment.Center){
-                                Text(text = "Price")
-                            }
-                            Box (modifier = Modifier.weight(1f), contentAlignment = Alignment.Center){
-                                Text(text = "Booked")
-                            }
 
                         }
-                        Divider()
-
-                        when {
-                            orderResultState.value.isLoading -> {
-
-                                LoadingScreen()
-                            }
-                            orderResultState.value.error.isNotEmpty() -> {
-                               Text(orderResultState.value.error)
-                            }
-                            orderResultState.value.orderList.isNotEmpty() -> {
-                               LazyColumn {
-                                   items(orderResultState.value.orderList){
-                                       Text(it.professionalID)
-                                   }
-                               }
-                            }
-                            else -> {
-                                // Handle any other cases, if needed
-                            }
-                        }
-
 
                     }
 
+                    AsyncImage(
+                        modifier = Modifier.clip(RoundedCornerShape(12.dp)).height(100.dp).width(80.dp),
+                        model = professionalData.value?.photoUrl,
+                        contentDescription = "",
+                        contentScale = ContentScale.FillBounds
+                    )
+
+                }
+            }
+
+            item {
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Column (modifier = Modifier.background(color = Color.White)){
+
+                    Box (contentAlignment = Alignment.Center, modifier = Modifier.padding(20.dp).height(20.dp)){
+                        Text(text = "Orders", fontWeight = FontWeight.Bold)
+                    }
+
+                    Divider()
+
+                    when {
+                        orderResultState.value.isLoading -> {
+
+                            LoadingScreen()
+                        }
+                        orderResultState.value.error.isNotEmpty() -> {
+                            Text(orderResultState.value.error)
+                        }
+                        orderResultState.value.orderList.isNotEmpty() -> {
+
+                            Row (modifier = Modifier.fillMaxWidth().height(72.dp).background(Color.White), verticalAlignment = Alignment.CenterVertically){
+
+                                SingleComponentForHeader(text = "Service Product", modifier = Modifier.weight(1f))
+                                //Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
+                                SingleComponentForHeader(text = "Order Id", modifier = Modifier.weight(1f))
+                                //Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
+                                SingleComponentForHeader(text = "Paid(₹)", modifier = Modifier.weight(1f))
+                                // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
+                                SingleComponentForHeader(text = "Date", modifier = Modifier.weight(1f))
+                                // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
+                                SingleComponentForHeader(text = "Status", modifier = Modifier.weight(1f))
 
 
+                            }
 
+                            for (i in orderResultState.value.orderList) {
+
+                                OrdersSingleRow(
+                                    data = i,
+                                    onItemClick = {
+
+                                    }
+                                )
+
+                            }
+                        }
+                        else -> {
+                            // Handle any other cases, if needed
+                        }
+                    }
 
 
                 }
+
+
             }
 
 

@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
 import androidx.compose.material.BottomSheetValue
@@ -100,7 +101,7 @@ fun SelectedProduct(data: ProductDataModel) {
             AsyncImage(
                 modifier = Modifier.padding(start = 24.dp).width(120.dp).height(60.dp)
                     .clip(RoundedCornerShape(6.dp)),
-                model = data.imageUrl,
+                model = data.productImage,
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 clipToBounds = true
@@ -113,7 +114,7 @@ fun SelectedProduct(data: ProductDataModel) {
 
             Text(
                 modifier = Modifier.padding(start = 24.dp),
-                text = data.serviceTitle,
+                text = data.productTitle,
                 maxLines = 1,
                 overflow = TextOverflow.Clip
             )
@@ -124,7 +125,7 @@ fun SelectedProduct(data: ProductDataModel) {
 
             Text(
                 modifier = Modifier.padding(start = 24.dp),
-                text = data.serviceId,
+                text = data.productId,
                 maxLines = 1,
                 overflow = TextOverflow.Clip
             )
@@ -176,8 +177,8 @@ fun CreateOfferScreen(navHostController: NavHostController) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed)
     )
-     val DISCOUNT = "https://res.cloudinary.com/dni4h8jjy/image/upload/v1721736775/OfferImages/xokhemztoz1c9tnbbghi.svg"
-     val SPECIAL_OFFER = "https://res.cloudinary.com/dni4h8jjy/image/upload/v1721736776/OfferImages/stroymz8erp9dxizjg8g.png"
+     val SPECIAL_OFFER = "https://res.cloudinary.com/dni4h8jjy/image/upload/v1721736775/OfferImages/xokhemztoz1c9tnbbghi.svg"
+     //val SPECIAL_OFFER = "https://res.cloudinary.com/dni4h8jjy/image/upload/v1721736776/OfferImages/stroymz8erp9dxizjg8g.png"
 
     val result = categoryViewModel.category.collectAsState()
     var categoryList by remember { mutableStateOf(emptyList<CategoryDataModel>()) }
@@ -251,7 +252,7 @@ fun CreateOfferScreen(navHostController: NavHostController) {
                         },
                         actions = {
                             CategorySelection(
-                                modifier = Modifier.width(300.dp).padding(vertical = 5.dp),
+                                modifier = Modifier.width(400.dp),
                                 categoryList = categoryList,
                                 selectedCategory = {
                                     createOfferViewModel.setProductTAG(it.categoryId)
@@ -275,21 +276,23 @@ fun CreateOfferScreen(navHostController: NavHostController) {
 
 
                         },
-                        elevation = 0.dp
+                        elevation = 0.dp,
+                        modifier = Modifier.height(100.dp)
                     )
                 }
 
             ) {
 
+                Divider()
                 LazyColumn {
                     items(productList) { it ->
                         ProductsSingleItemWithCheckBox(
                             data = it,
                             onProductSelect = {
-                                createOfferViewModel.setImageUrl(it.imageUrl)
-                                createOfferViewModel.setProductTAG(it.serviceTAG)
-                                createOfferViewModel.setProductTitle(it.serviceTitle)
-                                createOfferViewModel.setProductId(it.serviceId)
+                                createOfferViewModel.setImageUrl(it.productImage)
+                                createOfferViewModel.setProductTAG(it.productTAG)
+                                createOfferViewModel.setProductTitle(it.productTitle)
+                                createOfferViewModel.setProductId(it.productId)
                                 selectedProduct = it
                             },
                             selectedProduct = if (selectedProduct == it) selectedProduct else null,
@@ -461,7 +464,8 @@ fun CreateOfferScreen(navHostController: NavHostController) {
                                         scope.launch {
                                             bottomSheetScaffoldState.bottomSheetState.expand()
                                         }
-                                    }
+                                    },
+                                    colors = ButtonDefaults.buttonColors(contentColor = Color.White, backgroundColor =  Blue)
                                 ) {
                                     Text("Select Product")
                                 }
@@ -980,6 +984,7 @@ fun ProductsSingleItemWithCheckBox(
             modifier = Modifier.fillMaxWidth().height(100.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
 
             Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
 
@@ -1000,7 +1005,7 @@ fun ProductsSingleItemWithCheckBox(
                 AsyncImage(
                     modifier = Modifier.padding(start = 24.dp).width(140.dp).height(80.dp)
                         .clip(RoundedCornerShape(6.dp)),
-                    model = data.imageUrl,
+                    model = data.productImage,
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                     clipToBounds = true
@@ -1013,7 +1018,7 @@ fun ProductsSingleItemWithCheckBox(
 
                 Text(
                     modifier = Modifier.padding(start = 24.dp),
-                    text = data.serviceTitle,
+                    text = data.productTitle,
                     maxLines = 1,
                     overflow = TextOverflow.Clip
                 )
@@ -1024,7 +1029,7 @@ fun ProductsSingleItemWithCheckBox(
 
                 Text(
                     modifier = Modifier.padding(start = 24.dp),
-                    text = data.serviceId,
+                    text = data.productId,
                     maxLines = 1,
                     overflow = TextOverflow.Clip
                 )

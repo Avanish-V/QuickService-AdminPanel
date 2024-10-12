@@ -60,6 +60,7 @@ val orderFilterList = listOf<String>(
     "This Week"
 )
 val revenueFilter = listOf<String>(
+    "Today",
     "All Days",
     "This Week",
     "Last 28 days"
@@ -121,7 +122,7 @@ fun filterMenu2(listData : List<String>,onSelect:(String)->Unit) {
         mutableStateOf(false)
     }
 
-    var selectedText by remember { mutableStateOf("All Days") }
+    var selectedText by remember { mutableStateOf("Today") }
 
     Row {
 

@@ -46,10 +46,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -59,6 +64,9 @@ import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
+import me.sample.library.resources.Res
+import me.sample.library.resources.graphic_style
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -106,11 +114,28 @@ fun AddCategoryListScreen(navHostController: NavHostController) {
         ) {
 
             Box(
-                modifier = Modifier.size(120.dp).border(
-                    width = 0.5.dp,
-                    color = Color.Gray,
-                    shape = RoundedCornerShape(8.dp)
-                ),
+                modifier = Modifier
+                    .size(120.dp)
+                    .drawBehind {
+                    // Set dash effect: [dash length, space length]
+                    val dashLength = 5f
+                    val gapLength = 5f
+                    val strokeWidth = 2f
+                    val dashEffect = PathEffect.dashPathEffect(floatArrayOf(dashLength, gapLength), 0f)
+
+                    // Draw the dashed border
+                    drawRoundRect(
+                        color = Color.LightGray,
+                        size = size,
+                        style = Stroke(
+                            width = strokeWidth,
+                            pathEffect = dashEffect,
+                            cap = StrokeCap.Round,
+                            join = StrokeJoin.Round
+                        ),
+                        cornerRadius = androidx.compose.ui.geometry.CornerRadius(10.dp.toPx()) // optional rounded corners
+                    )
+                },
                 contentAlignment = Alignment.Center
             ) {
 
@@ -123,11 +148,14 @@ fun AddCategoryListScreen(navHostController: NavHostController) {
                 IconButton(onClick = {
                     launcher.launch()
                 }) {
-                    Icon(
-                        imageVector = Icons.Default.AddCircle,
+
+                    Image(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(Res.drawable.graphic_style),
                         contentDescription = "",
-                        tint = Color.LightGray
+                        colorFilter = ColorFilter.tint(color = Color.LightGray)
                     )
+
                 }
             }
 

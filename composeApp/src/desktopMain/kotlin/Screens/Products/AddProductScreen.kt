@@ -59,8 +59,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -142,11 +147,6 @@ fun AddProductScreen(navHostController: NavHostController) {
                                     rating = Rating(
                                         rating = "",
                                         count = "",
-                                        star_1 = "",
-                                        star_2 = "",
-                                        star_3 = "",
-                                        star_4 = "",
-                                        star_5 = ""
                                     )
                                 )
                             }
@@ -212,6 +212,10 @@ fun AddProductScreen(navHostController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
 
+                item {
+                    Text("Product Details", fontWeight = FontWeight.Bold)
+                }
+
                 item { TypeSelection(workType = {workType = it}) }
 
                 item {
@@ -272,9 +276,9 @@ fun AddProductScreen(navHostController: NavHostController) {
             mutableStateOf(false)
         }
 
-        var selectedText by remember { mutableStateOf("Service") }
+        var selectedText by remember { mutableStateOf("Work Type") }
 
-        val suggestions = listOf("Service", "Repair")
+        val suggestions = listOf("Maintenance", "Repair")
 
         workType(selectedText)
 
@@ -523,7 +527,7 @@ fun AddProductScreen(navHostController: NavHostController) {
                     },
                     label = "Actual Price",
                     leadingIcon = {
-                        Text("₹", fontWeight = FontWeight.Bold)
+                        Text("₹", fontWeight = FontWeight.Bold,)
                     },
                 )
             }
@@ -540,7 +544,7 @@ fun AddProductScreen(navHostController: NavHostController) {
                     },
                     label = "Service Tax",
                     leadingIcon = {
-                        Text("₹", fontWeight = FontWeight.Bold)
+                        Text("%", fontWeight = FontWeight.Bold)
                     }
                 )
             }
@@ -582,8 +586,29 @@ fun AddProductScreen(navHostController: NavHostController) {
             Text("Product Image", fontWeight = FontWeight.Bold)
 
             Box(
-                Modifier.width(300.dp).height(150.dp)
-                    .border(0.5.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp)),
+                Modifier.width(300.dp)
+                    .height(150.dp)
+                        .drawBehind {
+                            // Set dash effect: [dash length, space length]
+                            val dashLength = 5f
+                            val gapLength = 5f
+                            val strokeWidth = 2f
+                            val dashEffect = PathEffect.dashPathEffect(floatArrayOf(dashLength, gapLength), 0f)
+
+                            // Draw the dashed border
+                            drawRoundRect(
+                                color = Color.LightGray,
+                                size = size,
+                                style = Stroke(
+                                    width = strokeWidth,
+                                    pathEffect = dashEffect,
+                                    cap = StrokeCap.Round,
+                                    join = StrokeJoin.Round
+                                ),
+                                cornerRadius = androidx.compose.ui.geometry.CornerRadius(10.dp.toPx()) // optional rounded corners
+                            )
+                        },
+
                 contentAlignment = Alignment.Center
             ) {
                 if (imageByte == null) {
@@ -598,7 +623,7 @@ fun AddProductScreen(navHostController: NavHostController) {
 
             }
 
-            OutlinedButton(onClick = { launcher.launch() }) {
+            Button(onClick = { launcher.launch() }, colors = ButtonDefaults.buttonColors(contentColor = Color.Black, backgroundColor = secondary_color)) {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -608,9 +633,9 @@ fun AddProductScreen(navHostController: NavHostController) {
                         modifier = Modifier.size(16.dp),
                         painter = org.jetbrains.compose.resources.painterResource(Res.drawable.inbox_out),
                         contentDescription = "",
-                        colorFilter = ColorFilter.tint(Color.Gray)
+                        colorFilter = ColorFilter.tint(Color.Black)
                     )
-                    Text("Add Image", color = Color.Gray)
+                    Text("Add Image", color = Color.Black)
                 }
 
 

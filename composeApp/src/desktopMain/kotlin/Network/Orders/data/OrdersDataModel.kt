@@ -9,9 +9,9 @@ data class OrdersDataModel(
     val orderId: String = "",
     @SerialName("userUUID")
     val userUUID: String = "",
-    @SerialName("serviceInfo")
-    val serviceInfo: ServiceInfo,
-    @SerialName("priceTag")
+    @SerialName("productInfo")
+    val productInfo: ProductInfo,
+    @SerialName("priceDetails")
     val priceTag: PriceDetails,
     @SerialName("address")
     val address: UserAddressDataModel,
@@ -25,9 +25,9 @@ data class OrdersDataModel(
 )
 
 @Serializable
-data class ServiceInfo(
-    @SerialName("serviceTitle") val serviceTitle: String = "",
-    @SerialName("serviceId") val serviceId: String = ""
+data class ProductInfo(
+    @SerialName("productTitle") val productTitle: String = "",
+    @SerialName("productId") val productId: String = ""
 )
 
 @Serializable

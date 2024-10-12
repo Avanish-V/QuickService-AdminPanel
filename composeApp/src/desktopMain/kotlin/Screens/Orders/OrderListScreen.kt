@@ -136,7 +136,7 @@ fun OrderListScreen(navHostController: NavHostController) {
                        modifier = Modifier.weight(1f),
                        text = searchInput,
                        onValueChange = {searchInput = it},
-                       palceholder = "Search order...",
+                       palceholder = "Search by Id",
                        trailingIcon = {
 
                        },
@@ -162,11 +162,11 @@ fun OrderListScreen(navHostController: NavHostController) {
 
             Row (modifier = Modifier.fillMaxWidth().height(72.dp).background(Color.White), verticalAlignment = Alignment.CenterVertically){
 
-                SingleComponentForHeader(text = "Service", modifier = Modifier.weight(1f))
+                SingleComponentForHeader(text = "Service Product", modifier = Modifier.weight(1f))
                 //Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
                 SingleComponentForHeader(text = "Order Id", modifier = Modifier.weight(1f))
                 //Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
-                SingleComponentForHeader(text = "Paid", modifier = Modifier.weight(1f))
+                SingleComponentForHeader(text = "Paid(₹)", modifier = Modifier.weight(1f))
                // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
                 SingleComponentForHeader(text = "Date", modifier = Modifier.weight(1f))
                // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
@@ -227,7 +227,7 @@ fun OrdersSingleRow(data: OrdersDataModel,onItemClick:()->Unit) {
     Column {
         Row (modifier = Modifier.clickable { onItemClick() }.fillMaxWidth().height(72.dp).background(Color.White), verticalAlignment = Alignment.CenterVertically){
 
-            SingleComponent(text = data.serviceInfo.serviceTitle , modifier = Modifier.weight(1f))
+            SingleComponent(text = data.productInfo.productTitle , modifier = Modifier.weight(1f))
            // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
             SingleComponent(text = data.orderId, modifier = Modifier.weight(1f))
            // Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
@@ -386,7 +386,7 @@ fun SearchField(
                 0.5.dp,
                 color = Color.LightGray,
                 shape = RoundedCornerShape(topStart = 8.dp, bottomStart = 8.dp)
-            ).height(52.dp),
+            ).height(54.dp),
             value = text,
             onValueChange = {
                 onValueChange(it)
@@ -408,7 +408,7 @@ fun SearchField(
         Button(
             modifier = Modifier
                 .background(color = Blue, shape = RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp))
-                .height(52.dp)
+                .height(54.dp)
                 .shadow(
                     elevation = 15.dp,
                     spotColor = Blue,

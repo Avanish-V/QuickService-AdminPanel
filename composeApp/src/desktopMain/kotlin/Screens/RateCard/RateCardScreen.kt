@@ -69,6 +69,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import domain.usecase.UiState
 import kotlinx.coroutines.launch
@@ -180,38 +181,48 @@ fun RateCardScreen(modifier: Modifier = Modifier) {
 
             Row(
                 modifier = Modifier.fillMaxWidth().padding(24.dp),
-                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                CategorySelector(
-                    modifier = Modifier.width(300.dp).padding(horizontal = 24.dp),
-                    isLoading = {},
-                    onSelected = {
-                        applianceCategory = it
-                        rateCardViewModel.getRateCard(it)
-                    },
-                )
+                Text("Rate Card", fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
-                Button(
-                    onClick = {
-                        scope.launch {
-                            bottomSheetState.bottomSheetState.expand()
-                        }
-                    },
-                    contentPadding = PaddingValues(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Blue,
-                        contentColor = Color.White
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth().weight(1f),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "",
-                        colorFilter = ColorFilter.tint(Color.White)
+
+                    CategorySelector(
+                        modifier = Modifier.width(300.dp).padding(horizontal = 24.dp),
+                        isLoading = {},
+                        onSelected = {
+                            applianceCategory = it
+                            rateCardViewModel.getRateCard(it)
+                        },
                     )
-                    Text("Add Rate")
+
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                bottomSheetState.bottomSheetState.expand()
+                            }
+                        },
+                        contentPadding = PaddingValues(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Blue,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Image(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "",
+                            colorFilter = ColorFilter.tint(Color.White)
+                        )
+                        Text("Add Rate")
+                    }
+
                 }
+
 
             }
 
@@ -276,7 +287,7 @@ fun RateCardSingleItem(data: RateCardDataModel, onDeleteClick:()->Unit, onEditCl
 
             }
             Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
-            Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
+            Box(Modifier.weight(1f), contentAlignment = Alignment.Center){
 
                 Row(modifier = Modifier.padding(start = 24.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
 
@@ -286,7 +297,7 @@ fun RateCardSingleItem(data: RateCardDataModel, onDeleteClick:()->Unit, onEditCl
                     }
 
                     IconButton(onClick = {onDeleteClick()}){
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Red)
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Blue)
                     }
 
                 }

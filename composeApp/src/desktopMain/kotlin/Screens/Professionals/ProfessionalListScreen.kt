@@ -6,9 +6,13 @@ import Network.Professionals.presantation.ProfessionalsViewModel
 import Screens.Orders.LoadingScreen
 import Screens.Orders.SearchField
 import Screens.Orders.SingleComponentForHeader
+import Screens.Orders.SingleComponentWithStatus
 import SharedViewModel.SharedProfessionalViewModel
+import UI.Blue
 import UI.DarkSky
+import UI.LightBlue
 import UI.Red
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -194,11 +198,13 @@ fun ProfessionalSingleItem(data: ProfessionalDataModel, onClick:()->Unit) {
             Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
 
                 Text(
-                    modifier = Modifier.padding(start = 24.dp),
+                    modifier = Modifier.padding(start = 24.dp).background(color = LightBlue, shape = RoundedCornerShape(5.dp)).padding(horizontal = 20.dp, vertical = 4.dp),
                     text =data.accountStatus.status,
+                    color = Blue,
                     fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    maxLines = 1,
+
                 )
 
             }

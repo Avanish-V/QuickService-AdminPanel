@@ -42,15 +42,15 @@ class ProductRepoImpl (private val httpClient: HttpClient): ProductRepository {
         rating : Rating
     ): HttpResponse {
         val formData = formData {
-            append("serviceTitle",serviceTitle)
-            append("serviceId",serviceId)
-            append("serviceTAG",serviceTAG)
+            append("productTitle",serviceTitle)
+            append("productId",serviceId)
+            append("productTAG",serviceTAG)
             append("workType",workType)
             append("price",price)
             append("serviceTax",tax)
             append("description", Json.encodeToString(description))
             append("rating",Json.encodeToString(rating))
-            append("image", imageByte, Headers.build {
+            append("productImage", imageByte, Headers.build {
                 append(
                     io.ktor.http.HttpHeaders.ContentDisposition,
                     "form-data; name=\"image\"; filename=\"$serviceTitle.jpg\""
@@ -60,7 +60,7 @@ class ProductRepoImpl (private val httpClient: HttpClient): ProductRepository {
         }
 
 
-        return httpClient.post("/serviceProducts") {
+        return httpClient.post("/serviceProducts/addProduct") {
             setBody(MultiPartFormDataContent(formData)) // Updated from `body` to `setBody`
         }
     }

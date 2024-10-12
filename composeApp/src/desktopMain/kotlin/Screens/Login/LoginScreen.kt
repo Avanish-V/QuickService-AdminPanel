@@ -46,8 +46,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import me.sample.library.resources.Res
+import me.sample.library.resources.authentication
 import me.sample.library.resources.compose_multiplatform
 import me.sample.library.resources.login
+import me.sample.library.resources.logo_savvy
 import me.sample.library.resources.savvy
 import me.sample.library.resources.undraw_secure_login_pdn4
 import org.jetbrains.compose.resources.painterResource
@@ -76,7 +78,7 @@ fun LoginScreen(navHostController: NavHostController) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Image(
                     modifier = Modifier.size(600.dp).padding(start = 60.dp),
-                    painter = painterResource(Res.drawable.login),
+                    painter = painterResource(Res.drawable.authentication),
                     contentDescription = ""
                 )
 
@@ -95,7 +97,7 @@ fun LoginScreen(navHostController: NavHostController) {
             Box(
                 modifier = Modifier
                     .shadow(
-                        elevation = 10.dp,
+                        elevation = 5.dp,
                         shape = RoundedCornerShape(12.dp),
                         spotColor = Blue,
                         ambientColor = Blue
@@ -115,7 +117,7 @@ fun LoginScreen(navHostController: NavHostController) {
                     Box(modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp), contentAlignment = Alignment.Center){
                         Image(
                             modifier = Modifier.height(48.dp),
-                            painter = painterResource(Res.drawable.savvy),
+                            painter = painterResource(Res.drawable.logo_savvy),
                             contentDescription = ""
                         )
                     }

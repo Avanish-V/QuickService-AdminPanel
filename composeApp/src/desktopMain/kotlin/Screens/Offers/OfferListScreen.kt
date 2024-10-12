@@ -278,7 +278,8 @@ fun OfferListSingleRow(
                 ){
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = Blue
                     )
                 }
 

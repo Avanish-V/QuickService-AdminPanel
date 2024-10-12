@@ -232,7 +232,7 @@ fun ProductScreen(navHostController: NavHostController) {
 
                                 productId?.let { it1 ->
 
-                                    result.deleteProduct(it1.serviceId).collect{
+                                    result.deleteProduct(it1.productId).collect{
 
                                         when(it){
                                             is UiState.LOADING->{
@@ -276,7 +276,7 @@ fun ProductsSingleItem(data:ProductDataModel,onDeleteClick:()->Unit,onEditClick:
 
                 AsyncImage(
                     modifier = Modifier.padding(start = 24.dp).width(140.dp).height(80.dp).clip(RoundedCornerShape(6.dp)),
-                    model = data.imageUrl,
+                    model = data.productImage,
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                     clipToBounds = true
@@ -287,13 +287,13 @@ fun ProductsSingleItem(data:ProductDataModel,onDeleteClick:()->Unit,onEditClick:
             Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
             Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
 
-                Text(modifier = Modifier.padding(start = 24.dp), text = data.serviceTitle, maxLines = 1, overflow = TextOverflow.Clip)
+                Text(modifier = Modifier.padding(start = 24.dp), text = data.productTitle, maxLines = 1, overflow = TextOverflow.Clip)
 
             }
             Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
             Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
 
-                Text(modifier = Modifier.padding(start = 24.dp), text =data.serviceId, maxLines = 1, overflow = TextOverflow.Clip)
+                Text(modifier = Modifier.padding(start = 24.dp), text =data.productId, maxLines = 1, overflow = TextOverflow.Clip)
 
             }
             Divider(modifier = Modifier.fillMaxHeight().width(1.dp))
@@ -325,7 +325,7 @@ fun ProductsSingleItem(data:ProductDataModel,onDeleteClick:()->Unit,onEditClick:
                     }
 
                     IconButton(onClick = {onDeleteClick()}){
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Red)
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = "", tint = Blue)
                     }
 
                 }

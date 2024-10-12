@@ -5,6 +5,7 @@ import Network.Orders.data.PriceDetails
 import Network.Professionals.presantation.ProfessionalsViewModel
 import SharedViewModel.SharedOrderViewModel
 import UI.Blue
+import UI.Yellow
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -118,7 +119,7 @@ fun OrderDetailsScreen(navHostController: NavHostController) {
 
                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
 
-                       Text(orderData.value?.serviceInfo?.serviceTitle ?: "null")
+                       Text(orderData.value?.productInfo?.productTitle ?: "null")
 
                        Text(
                            text = "₹ "+orderData.value?.priceTag?.price.toString(),
@@ -127,7 +128,20 @@ fun OrderDetailsScreen(navHostController: NavHostController) {
 
                    }
 
-                    orderData.value?.status?.let { SingleComponentWithStatus(text = it) }
+                    orderData.value?.status?.let {
+                        Column (verticalArrangement = Arrangement.spacedBy(24.dp), horizontalAlignment = Alignment.End){
+                            SingleComponentWithStatus(text = it)
+                            if (it == "Canceled"){
+                                Button(onClick = {}, colors = ButtonDefaults.buttonColors(backgroundColor = Blue, contentColor = Color.White)){
+                                    Text("Create Refund")
+                                }
+                            }
+                        }
+
+                    }
+
+
+
                 }
 
 
@@ -163,7 +177,7 @@ fun OrderDetailsScreen(navHostController: NavHostController) {
                                 modifier = Modifier.size(24.dp),
                                 colorFilter = ColorFilter.tint(Blue)
                             )
-                            Text("Verified")
+                            Text("Payment verified")
                         }
                     }
                 }
@@ -293,10 +307,12 @@ fun PriceTagOrderDetails( priceDetails: PriceDetails?) {
                     Text(
                         text = "Promo-${priceDetails?.coupon?.couponCode}",
                         style = MaterialTheme.typography.body1,
+                        color = Yellow
                     )
                     Text(
                         text = "-₹${priceDetails?.coupon?.discount}",
                         style = MaterialTheme.typography.body1,
+                        color = Yellow
                     )
                 }
             }
